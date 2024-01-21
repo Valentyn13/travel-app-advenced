@@ -23,7 +23,7 @@ const App =() => {
               <Route path={ROUTES.SIGN_UP} element={<SignUpPage/>}/>
               <Route path={ROUTES.SIGN_IN} element={<SignInPage/>}/>
               <Route path={ROUTES.TRIP_DETAILS} element={<TripDeteilsPage/>}/>
-              <Route path={ROUTES.BOOKINGS} element={<BookingsPage bookings={bookings}/>}/>
+              <Route path={ROUTES.BOOKINGS} element={<BookingsPage setBookings={setBookings} bookings={bookings}/>}/>
               <Route path="*" element={<Navigate to={ROUTES.MAIN}/>}/>
           </Route>
       </Routes>
