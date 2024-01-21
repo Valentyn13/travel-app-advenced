@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const MainPage = () => {
     return(
         <main>
@@ -70,9 +72,10 @@ const MainPage = () => {
                   </strong>
                 </div>
               </div>
-              <a data-test-id="trip-card-link" href="./trip.html" className="button">
+              {/* // TODO: remove hard code */}
+              <Link data-test-id="trip-card-link" to="/trip/123" className="button">
                 Discover a trip
-              </a>
+              </Link>
             </li>
           </ul>
         </section>

@@ -1,4 +1,8 @@
+import { useParams } from "react-router";
+
 const TripDeteilsPage = () => {
+    const { tripId } = useParams()
+    console.log(tripId)
     return(
         <main className="trip-page">
         <h1 className="visually-hidden">Travel App</h1>

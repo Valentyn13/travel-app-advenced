@@ -1,8 +1,18 @@
+import { Link, useNavigate } from "react-router-dom";
+import { ROUTES } from "../../types/routes.types";
+import { FormEvent } from "react";
+
 const SignUpPage = () => {
+  const navigate = useNavigate()
+
+  const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    navigate(ROUTES.MAIN)
+  }
   return (
     <main className="sign-up-page">
       <h1 className="visually-hidden">Travel App</h1>
-      <form className="sign-up-form" autoComplete="off">
+      <form onSubmit={handleSubmit} className="sign-up-form" autoComplete="off">
         <h2 className="sign-up-form__title">Sign Up</h2>
         <label className="input">
           <span className="input__heading">Full name</span>
@@ -33,13 +43,13 @@ const SignUpPage = () => {
       </form>
       <span>
         Already have an account?
-        <a
+        <Link
           data-test-id="auth-sign-in-link"
-          href="./sign-in.html"
+          to={ROUTES.SIGN_IN}
           className="sign-up-form__link"
         >
           Sign In
-        </a>
+        </Link>
       </span>
     </main>
   );
