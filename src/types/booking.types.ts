@@ -3,12 +3,14 @@ export interface IBooking {
     userId: string;
     tripId: string;
     guests: number;
-    date: Date;
+    date: string;
     trip: {
       title: string;
       duration: number;
       price: number;
     };
     totalPrice: number;
-    createdAt: Date;
+    createdAt: string;
 }
+
+export type IBookingList = IBooking[]

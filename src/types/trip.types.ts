@@ -1,10 +1,14 @@
+import { LevelType } from "./filter.types";
+
 export interface ITrip {
     id: string,
     title: string,
     description: string,
-    level: 'easy'|'difficult' | 'moderate',
+    level: LevelType,
     duration: number,
     price: number,
     image: string,
-    createdAt: Date
+    createdAt: string
 }
+
+export type ITripList = ITrip[]
