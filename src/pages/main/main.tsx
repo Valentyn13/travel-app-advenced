@@ -1,6 +1,8 @@
-import { Dispatch, FC } from "react";
+import { ChangeEvent, Dispatch, FC, useState } from "react";
 import TripList from "../../components/trip-list/trip-list";
 import { ITripList } from "../../types/trip.types";
+import { DURATION, LEVEL } from "../../types/filter.types";
+import { filterTrips } from "../../helpers/filter.helpers";
 
 type Props = {
   trips:ITripList,
@@ -8,6 +10,27 @@ type Props = {
 }
 
 const MainPage:FC<Props> = ({trips}) => {
+
+  const [durationValue, setDurationValue] = useState<string>(DURATION.UNACTIVE)
+  const [levelValue, setLevelValue] = useState<string>('')
+
+  const [titleValue, setTitleValue] = useState<string>('')
+
+  const handleTitleChange = (e:ChangeEvent<HTMLInputElement>) => {
+    const title = e.target.value
+    setTitleValue(title)
+  }
+
+  const handleDurationChange = (e:ChangeEvent<HTMLSelectElement>) => {
+    const duration = e.target.value
+    setDurationValue(duration)
+  }
+
+  const handleLevelChange = (e:ChangeEvent<HTMLSelectElement>) => {
+    const level = e.target.value
+    setLevelValue(level)
+  }
+
     return(
         <main>
         <h1 className="visually-hidden">Travel App</h1>
@@ -17,6 +40,8 @@ const MainPage:FC<Props> = ({trips}) => {
             <label className="trips-filter__search input">
               <span className="visually-hidden">Search by name</span>
               <input
+                value={titleValue}
+                onChange={handleTitleChange}
                 data-test-id="filter-search"
                 name="search"
                 type="search"
@@ -25,25 +50,25 @@ const MainPage:FC<Props> = ({trips}) => {
             </label>
             <label className="select">
               <span className="visually-hidden">Search by duration</span>
-              <select data-test-id="filter-duration" name="duration">
-                <option value="">duration</option>
-                <option value="0_x_5">&lt; 5 days</option>
-                <option value="5_x_10">&lt; 10 days</option>
-                <option value="10">&ge; 10 days</option>
+              <select onChange={handleDurationChange} data-test-id="filter-duration" name="duration">
+                <option value={DURATION.UNACTIVE}>duration</option>
+                <option value={DURATION.LESS_THAN_FIVE}>&lt; 5 days</option>
+                <option value={DURATION.FIVE_TO_TEN}>&lt; 10 days</option>
+                <option value={DURATION.MORE_OR_EQUAL_TEN}>&ge; 10 days</option>
               </select>
             </label>
             <label className="select">
               <span className="visually-hidden">Search by level</span>
-              <select data-test-id="filter-level" name="level">
-                <option value="">level</option>
-                <option value="easy">easy</option>
-                <option value="moderate">moderate</option>
-                <option value="difficult">difficult</option>
+              <select onChange={handleLevelChange} data-test-id="filter-level" name="level">
+                <option value={LEVEL.UNACTIVE}>level</option>
+                <option value={LEVEL.EASY}>easy</option>
+                <option value={LEVEL.MODERATE}>moderate</option>
+                <option value={LEVEL.DIFFICULT}>difficult</option>
               </select>
             </label>
           </form>
         </section>
-          <TripList trips={trips}/>
+          <TripList trips={filterTrips(trips,{title:titleValue,duration:durationValue,level:levelValue})}/>
       </main>
     )
 }
