@@ -21,6 +21,7 @@ const TripCard:FC<Props> = ({trip}) => {
               {title}
             </h3>
             <div className="trip-info__content">
+              <img className="trip-info__calendar-img"  src="/src/assets/images/calendar.svg" alt="calendar" />
               <span
                 data-test-id="trip-card-duration"
                 className="trip-info__duration"
