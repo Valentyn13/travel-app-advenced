@@ -1,14 +1,59 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../types/routes.types";
-import { FormEvent } from "react";
+import { ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useState } from "react";
+import { IUser } from "../../types/user.types";
+import { isPasswordLenghtValid, isValidEmail } from "../../helpers/email.helpers";
 
-const SignUpPage = () => {
+type Props ={
+  setUser:Dispatch<SetStateAction<IUser | null>>
+}
+
+const SignUpPage:FC<Props> = ({ setUser}) => {
   const navigate = useNavigate()
+
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const [validEmail, setValidEmail] = useState(false)
+  const [passwordValid, setPasswordValid] = useState(false)
+
+  const handleFullNameInput = (e:ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.value
+    setFullName(name)
+  }
+  const handleEmailInput = (e:ChangeEvent<HTMLInputElement>) => {
+    const email = e.target.value
+    setEmail(email)
+  }
+
+  const handlePasswordInput = (e:ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setPassword(value)
+  }
 
   const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setUser({
+      fullName,
+      email,
+      password,
+      id: self.crypto.randomUUID()
+    })
     navigate(ROUTES.MAIN)
   }
+
+
+  const handleValidateEmail= () => {
+    const valid = isValidEmail(email)
+    setValidEmail(valid)
+  }
+
+  const handlePasswordValidate = () => {
+    const valid = isPasswordLenghtValid(password)
+    setPasswordValid(valid)
+  }
+
   return (
     <main className="sign-up-page">
       <h1 className="visually-hidden">Travel App</h1>
@@ -17,6 +62,7 @@ const SignUpPage = () => {
         <label className="input">
           <span className="input__heading">Full name</span>
           <input
+            onChange={handleFullNameInput}
             data-test-id="auth-full-name"
             name="full-name"
             type="text"
@@ -25,19 +71,23 @@ const SignUpPage = () => {
         </label>
         <label className="input">
           <span className="input__heading">Email</span>
-          <input data-test-id="auth-email" name="email" type="email" required />
+          <input data-test-id="auth-email" name="email" type="email" onChange={handleEmailInput} onBlur={handleValidateEmail} required />
+          {!validEmail && (<div>Email is not valid</div>)}
         </label>
         <label className="input">
           <span className="input__heading">Password</span>
           <input
+            onChange={handlePasswordInput}
+            onBlur={handlePasswordValidate}
             data-test-id="auth-password"
             name="password"
             type="password"
             autoComplete="new-password"
             required
           />
+          {!passwordValid && (<div>Password must have from 3 to 20 characters</div>)}
         </label>
-        <button data-test-id="auth-submit" className="button" type="submit">
+        <button disabled={!validEmail || !passwordValid} data-test-id="auth-submit" className="button" type="submit">
           Sign Up
         </button>
       </form>
