@@ -1,10 +1,18 @@
-const DURATION = {
-    LESS_THAN_FIVE: 5,
-    LESS_THAN_TEN:10,
-    MORE_OR_EQUAL_TEN:10
-} as const 
+const  DURATION =  {
+    LESS_THAN_FIVE :'0_x_5',
+    FIVE_TO_TEN :'5_x_10',
+    MORE_OR_EQUAL_TEN :'10',
+    UNACTIVE : ''
+} as const
 
+const LEVEL = {
+    EASY:'easy',
+    MODERATE:'moderate',
+    DIFFICULT:'difficult',
+    UNACTIVE:''
+} as const
+
+export type DurationType = typeof DURATION
 export type LevelType = 'easy'|'difficult' | 'moderate'
 
-export { DURATION }
-
+export { DURATION, LEVEL }
