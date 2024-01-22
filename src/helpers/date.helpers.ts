@@ -22,3 +22,11 @@ export const sortByDate = (objectsArray:IBookingList) => {
   
     return sortedArray;
   }
+
+
+
+  export const isDateBeforeCurrent = (date: string) => {
+    const dateInput = new Date(date);
+    const currentDate = new Date();
+    return dateInput < currentDate;
+  }
