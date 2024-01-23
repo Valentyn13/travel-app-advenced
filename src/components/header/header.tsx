@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from '../../types/routes.types';
 
 import './styles.css'
+import LinkButton from '../common/link-button/link-button';
 
 const Header = () => {
     return(
@@ -36,13 +37,12 @@ const Header = () => {
                   >
                     <li data-test-id="header-profile-nav-username" className="profile-nav__item">John Doe</li>
                     <li className="profile-nav__item">
-                      <Link
+                      <LinkButton
                         to={ROUTES.SIGN_IN}
-                        data-test-id="header-profile-nav-sign-out"
-                        className="profile-nav__sign-out button"
-                      >
-                        Sign Out
-                      </Link>
+                        testId='header-profile-nav-sign-out'
+                        aditionClassNames='profile-nav__sign-out'
+                        children={'Sign Out'}
+                      />
                     </li>
                   </ul>
                 </div>

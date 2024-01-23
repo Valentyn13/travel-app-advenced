@@ -27,7 +27,7 @@ const BookingCard:FC<Props> = ({booking, bookings, setBookings}) => {
       {totalPrice} $
     </span>
     <button
-        onClick={handleCancelBooking}
+      onClick={handleCancelBooking}
       data-test-id="booking-cancel"
       className="booking__cancel"
       title="Cancel booking"

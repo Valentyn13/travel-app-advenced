@@ -1,8 +1,9 @@
 import {  ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useState } from "react";
 import { ITrip } from "../../types/trip.types";
-import { formatDate, isDateBeforeCurrent } from "../../helpers/date.helpers";
+import { formatDate, getTomorrowDate, isTomorrowOrLater } from "../../helpers/date.helpers";
 import { IBooking, IBookingList } from "../../types/booking.types";
 import { IUser } from "../../types/user.types";
+import Button from "../../components/common/button/button";
 
 type Props = {
   user:null|IUser;
@@ -16,7 +17,7 @@ const TripPopup:FC<Props> = ({user,bookings,setBookings,trip, onClose}) => {
   const {title, duration, level} = trip
 
   const[guests, setGuests] = useState<number>(1)
-  const [date, setDate] = useState(formatDate(new Date().toISOString()))
+  const [date, setDate] = useState(formatDate(getTomorrowDate().toISOString()))
   const [isNumberOfGuestsValid, setIsNumberOfGuestsValid] = useState(true)
 
   const validateNumberOfGuests = (guests:number) => {
@@ -33,10 +34,10 @@ const TripPopup:FC<Props> = ({user,bookings,setBookings,trip, onClose}) => {
   }
 
   const validateDate = (newDate:string) => {
-    const isBefore = isDateBeforeCurrent(newDate)
-    if(isBefore) {
+    const isBefore = isTomorrowOrLater(newDate)
+    if(!isBefore) {
 
-      setDate(formatDate(new Date().toISOString()))
+      setDate(formatDate(getTomorrowDate().toISOString()))
       return
     }
     setDate(newDate)
@@ -74,10 +75,25 @@ const TripPopup:FC<Props> = ({user,bookings,setBookings,trip, onClose}) => {
 
     setBookings([...bookings, newBooking])
     onClose()
-    console.log('Submit')
-  } else {
-    alert('Please authorize')
+    return
   }
+
+  const newBooking:IBooking = {
+    id: self.crypto.randomUUID(),
+    userId: self.crypto.randomUUID(),
+    tripId:trip.id,
+    guests,
+    date,
+    trip:{
+      title:trip.title,
+      duration:trip.duration,
+      price:trip.price
+    },
+    totalPrice: guests * trip.price,
+    createdAt: new Date().toISOString()
+  }
+  setBookings([...bookings, newBooking])
+  onClose()
  }
 
 
@@ -146,14 +162,12 @@ const TripPopup:FC<Props> = ({user,bookings,setBookings,trip, onClose}) => {
                   {guests * trip.price}$
                 </output>
               </span>
-              <button
-                data-test-id="book-trip-popup-submit"
-                className="button"
+              <Button
+                testId="book-trip-popup-submit"
                 type="submit"
                 disabled={!isNumberOfGuestsValid}
-              >
-                Book a trip
-              </button>
+                children={'Book a trip'}
+              />
             </form>
           </div>
         </div>

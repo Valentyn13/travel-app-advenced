@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom"
 import { ITrip } from "../../types/trip.types";
 import { FC } from "react";
+import LinkButton from "../common/link-button/link-button";
 
 type Props = {
     trip: ITrip
@@ -43,12 +43,12 @@ const TripCard:FC<Props> = ({trip}) => {
             </strong>
           </div>
         </div>
-        {/* // TODO: remove hard code */}
-        <Link data-test-id="trip-card-link" state={{trip}} to={{
-            pathname: `/trip/${id}`,
-        }} className="button">
-          Discover a trip
-        </Link>
+        <LinkButton
+          to={`/trip/${id}`}
+          state={{trip}}
+          children={`Discover a trip`}
+          testId="trip-card-link"
+        />
       </li>
     )
 }

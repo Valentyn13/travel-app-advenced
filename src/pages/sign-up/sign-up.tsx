@@ -3,6 +3,7 @@ import { ROUTES } from "../../types/routes.types";
 import { ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useState } from "react";
 import { IUser } from "../../types/user.types";
 import { isPasswordLenghtValid, isValidEmail } from "../../helpers/email.helpers";
+import Button from "../../components/common/button/button";
 
 type Props ={
   setUser:Dispatch<SetStateAction<IUser | null>>
@@ -87,9 +88,12 @@ const SignUpPage:FC<Props> = ({ setUser}) => {
           />
           {!passwordValid && (<div>Password must have from 3 to 20 characters</div>)}
         </label>
-        <button disabled={!validEmail || !passwordValid} data-test-id="auth-submit" className="button" type="submit">
-          Sign Up
-        </button>
+        <Button 
+          children="Sign Up"
+          disabled={!validEmail || !passwordValid}
+          type="submit"
+          testId="auth-submit"
+          />
       </form>
       <span>
         Already have an account?

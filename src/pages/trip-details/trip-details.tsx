@@ -4,6 +4,7 @@ import { Dispatch, FC, SetStateAction, useState } from "react";
 import TripPopup from "./trip-popup";
 import { IUser } from "../../types/user.types";
 import { IBookingList } from "../../types/booking.types";
+import Button from "../../components/common/button/button";
 
 type ITripDetails ={
   trip: ITrip
@@ -75,13 +76,12 @@ const TripDeteilsPage:FC<Props> = ({user, bookings, setBookings}) => {
                 {price} $
               </strong>
             </div>
-            <button
-            onClick={handleOpenBookModal}
-              data-test-id="trip-details-button"
-              className="trip__button button"
-            >
-              Book a trip
-            </button>
+            <Button
+              onClick={handleOpenBookModal}
+              children={'Book a trip'}
+              testId="trip-details-button"
+              aditionClassNames="trip__button"
+            />
           </div>
         </div>
         {isBookModalOpen && (
