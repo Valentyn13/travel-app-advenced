@@ -2,6 +2,7 @@ import { ChangeEvent, FC } from "react";
 import { DURATION, LEVEL } from "../../types/filter.types";
 import Input from "../common/input/input";
 import Label from "../common/label/label";
+import Select from "../common/select/select";
 
 type Props = {
     titleValue:string
@@ -28,28 +29,30 @@ const TripFilter:FC<Props> = ({titleValue, handleDurationChange, handleLevelChan
             />
           </Label>
           <Label className="select" headingClass="visually-hidden" name="Search by duration">
-          <select
-              onChange={handleDurationChange}
-              data-test-id="filter-duration"
-              name="duration"
-            >
-              <option value={DURATION.UNACTIVE}>duration</option>
-              <option value={DURATION.LESS_THAN_FIVE}>&lt; 5 days</option>
-              <option value={DURATION.FIVE_TO_TEN}>&lt; 10 days</option>
-              <option value={DURATION.MORE_OR_EQUAL_TEN}>&ge; 10 days</option>
-            </select>
+            <Select
+            onChange={handleDurationChange}
+            testId="filter-duration"
+            name="duration"
+            options={[
+              {value:DURATION.UNACTIVE,name:'duration'},
+              {value:DURATION.LESS_THAN_FIVE,name:'< 5 days'},
+              {value:DURATION.FIVE_TO_TEN,name:'< 10 days'},
+              {value:DURATION.MORE_OR_EQUAL_TEN,name:'≥ 10 days'},
+            ]}
+            />
           </Label>
           <Label className="select" headingClass="visually-hidden" name="Search by level">
-          <select
-              onChange={handleLevelChange}
-              data-test-id="filter-level"
-              name="level"
-            >
-              <option value={LEVEL.UNACTIVE}>level</option>
-              <option value={LEVEL.EASY}>easy</option>
-              <option value={LEVEL.MODERATE}>moderate</option>
-              <option value={LEVEL.DIFFICULT}>difficult</option>
-            </select>
+            <Select
+            onChange={handleLevelChange}
+            testId="filter-level"
+            name="level"
+            options={[
+              {value:LEVEL.UNACTIVE, name:'level'},
+              {value:LEVEL.EASY, name:'easy'},
+              {value:LEVEL.MODERATE, name:'moderate'},
+              {value:LEVEL.DIFFICULT, name:'difficult'},
+            ]}
+            />
           </Label>
         </form>
       </section>
