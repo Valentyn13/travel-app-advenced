@@ -5,6 +5,7 @@ import { IUser } from "../../types/user.types";
 import { isValidEmail, isPasswordLenghtValid } from "../../helpers/email.helpers";
 import Button from "../../components/common/button/button";
 import Input from "../../components/common/input/input";
+import Label from "../../components/common/label/label";
 type Props ={
   setUser:Dispatch<SetStateAction<IUser | null>>
 }
@@ -60,9 +61,8 @@ const SignInPage:FC<Props> = ({setUser}) => {
         <h1 className="visually-hidden">Travel App</h1>
         <form onSubmit={handleSubmit} className="sign-in-form" autoComplete="off">
           <h2 className="sign-in-form__title">Sign In</h2>
-          <label className="input">
-            <span className="input__heading">Email</span>
-            <Input
+          <Label className="input" name="Email" isInputError={!validEmail} errorMessage="Email is not valid">
+          <Input
             testId="auth-email"
             name="email"
             type="email"
@@ -71,11 +71,9 @@ const SignInPage:FC<Props> = ({setUser}) => {
             required
             value={email}
             />
-            {!validEmail && (<div>Email is not valid</div>)}
-          </label>
-          <label className="input">
-            <span className="input__heading">Password</span>
-            <Input
+          </Label>
+          <Label className="input" name="Password" isInputError={!passwordValid} errorMessage="Password must have from 3 to 20 characters">
+          <Input
             value={password}
             onChange={handlePasswordInput}
             onBlur={handlePasswordValidate}
@@ -84,8 +82,7 @@ const SignInPage:FC<Props> = ({setUser}) => {
             type="password"
             required
             />
-            {!passwordValid && (<div>Password must have from 3 to 20 characters</div>)}
-          </label>
+          </Label>
           <Button
             type="submit"
             testId="auth-submit"

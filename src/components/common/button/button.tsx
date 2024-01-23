@@ -16,7 +16,7 @@ const Button:FC<Props> = ({children,type,title,disabled, testId, aditionClassNam
         onClick={onClick}
         disabled={disabled}
         data-test-id={testId}
-        className={`button ${aditionClassNames}`}
+        className={aditionClassNames? `button ${aditionClassNames}`: 'button'}
         type={type}
         title={title}
         >

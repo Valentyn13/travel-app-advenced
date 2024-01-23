@@ -5,6 +5,7 @@ import { IUser } from "../../types/user.types";
 import { isPasswordLenghtValid, isValidEmail } from "../../helpers/email.helpers";
 import Button from "../../components/common/button/button";
 import Input from "../../components/common/input/input";
+import Label from "../../components/common/label/label";
 
 type Props ={
   setUser:Dispatch<SetStateAction<IUser | null>>
@@ -45,7 +46,6 @@ const SignUpPage:FC<Props> = ({ setUser}) => {
     navigate(ROUTES.MAIN)
   }
 
-
   const handleValidateEmail= () => {
     const valid = isValidEmail(email)
     setValidEmail(valid)
@@ -61,9 +61,8 @@ const SignUpPage:FC<Props> = ({ setUser}) => {
       <h1 className="visually-hidden">Travel App</h1>
       <form onSubmit={handleSubmit} className="sign-up-form" autoComplete="off">
         <h2 className="sign-up-form__title">Sign Up</h2>
-        <label className="input">
-          <span className="input__heading">Full name</span>
-          <Input
+        <Label className="input" name="Full name">
+        <Input
             onChange={handleFullNameInput}
             testId="auth-full-name"
             name="full-name"
@@ -71,10 +70,9 @@ const SignUpPage:FC<Props> = ({ setUser}) => {
             required
             value={fullName}
           />
-        </label>
-        <label className="input">
-          <span className="input__heading">Email</span>
-          <Input
+        </Label>
+        <Label className="input" name="Email" isInputError={!validEmail} errorMessage="Email is not valid">
+        <Input
           name="email"
           type="email"
           onChange={handleEmailInput}
@@ -83,11 +81,9 @@ const SignUpPage:FC<Props> = ({ setUser}) => {
           value={email}
           testId="auth-email"
           />
-          {!validEmail && (<div>Email is not valid</div>)}
-        </label>
-        <label className="input">
-          <span className="input__heading">Password</span>
-          <Input
+        </Label>
+        <Label className="input" name="Password" isInputError={!passwordValid} errorMessage="Password must have from 3 to 20 characters">
+        <Input
             onChange={handlePasswordInput}
             onBlur={handlePasswordValidate}
             testId="auth-password"
@@ -96,8 +92,7 @@ const SignUpPage:FC<Props> = ({ setUser}) => {
             required
             value={password}
           />
-          {!passwordValid && (<div>Password must have from 3 to 20 characters</div>)}
-        </label>
+        </Label>
         <Button 
           children="Sign Up"
           disabled={!validEmail || !passwordValid}

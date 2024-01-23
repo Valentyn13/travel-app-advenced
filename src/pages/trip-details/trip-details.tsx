@@ -19,7 +19,6 @@ type Props = {
 const TripDeteilsPage:FC<Props> = ({user, bookings, setBookings}) => {
 
   const location = useLocation()
- //  const { tripId } = useParams()
 
   const {trip} = location.state as ITripDetails
   const {title, image, description, duration, price, level} = trip

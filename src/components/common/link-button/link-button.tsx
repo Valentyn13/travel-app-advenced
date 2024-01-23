@@ -14,7 +14,7 @@ const LinkButton:FC<Props> = ({to, state, testId, aditionClassNames, children}) 
         <Link
         to={to}
         data-test-id={testId}
-        className={`button ${aditionClassNames}`}
+        className={aditionClassNames? `button ${aditionClassNames}`: 'button'}
         state={state}
       >
         {children}

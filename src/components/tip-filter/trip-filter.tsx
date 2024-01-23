@@ -1,6 +1,7 @@
 import { ChangeEvent, FC } from "react";
 import { DURATION, LEVEL } from "../../types/filter.types";
 import Input from "../common/input/input";
+import Label from "../common/label/label";
 
 type Props = {
     titleValue:string
@@ -16,9 +17,8 @@ const TripFilter:FC<Props> = ({titleValue, handleDurationChange, handleLevelChan
       <section className="trips-filter">
         <h2 className="visually-hidden">Trips filter</h2>
         <form className="trips-filter__form" autoComplete="off">
-          <label className="trips-filter__search input">
-            <span className="visually-hidden">Search by name</span>
-            <Input
+          <Label className="input" name="Search by name" headingClass="visually-hidden">
+          <Input
               value={titleValue}
               onChange={handleTitleChange}
               testId="filter-search"
@@ -26,10 +26,9 @@ const TripFilter:FC<Props> = ({titleValue, handleDurationChange, handleLevelChan
               type="search"
               placeholder="search by title"
             />
-          </label>
-          <label className="select">
-            <span className="visually-hidden">Search by duration</span>
-            <select
+          </Label>
+          <Label className="select" headingClass="visually-hidden" name="Search by duration">
+          <select
               onChange={handleDurationChange}
               data-test-id="filter-duration"
               name="duration"
@@ -39,10 +38,9 @@ const TripFilter:FC<Props> = ({titleValue, handleDurationChange, handleLevelChan
               <option value={DURATION.FIVE_TO_TEN}>&lt; 10 days</option>
               <option value={DURATION.MORE_OR_EQUAL_TEN}>&ge; 10 days</option>
             </select>
-          </label>
-          <label className="select">
-            <span className="visually-hidden">Search by level</span>
-            <select
+          </Label>
+          <Label className="select" headingClass="visually-hidden" name="Search by level">
+          <select
               onChange={handleLevelChange}
               data-test-id="filter-level"
               name="level"
@@ -52,7 +50,7 @@ const TripFilter:FC<Props> = ({titleValue, handleDurationChange, handleLevelChan
               <option value={LEVEL.MODERATE}>moderate</option>
               <option value={LEVEL.DIFFICULT}>difficult</option>
             </select>
-          </label>
+          </Label>
         </form>
       </section>
     </>

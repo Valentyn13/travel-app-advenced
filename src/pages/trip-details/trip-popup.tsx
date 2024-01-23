@@ -5,6 +5,7 @@ import { IBooking, IBookingList } from "../../types/booking.types";
 import { IUser } from "../../types/user.types";
 import Button from "../../components/common/button/button";
 import Input from "../../components/common/input/input";
+import Label from "../../components/common/label/label";
 
 type Props = {
   user:null|IUser;
@@ -131,9 +132,8 @@ const TripPopup:FC<Props> = ({user,bookings,setBookings,trip, onClose}) => {
                   </span>
                 </div>
               </div>
-              <label className="input">
-                <span className="input__heading">Date</span>
-                <Input
+              <Label className="input" name="Date">
+              <Input
                   value={date}
                   onChange={handleSetDate}
                   testId="book-trip-popup-date"
@@ -141,10 +141,9 @@ const TripPopup:FC<Props> = ({user,bookings,setBookings,trip, onClose}) => {
                   type="date"
                   required
                 />
-              </label>
-              <label className="input">
-                <span className="input__heading">Number of guests</span>
-                <Input
+              </Label>
+              <Label className="input" name="Number of guests" isInputError={!isNumberOfGuestsValid} errorMessage="Only from 0 to 10 guests">
+              <Input
                   onChange={handleSetGuests}
                   value={`${guests}`}
                   name="quests"
@@ -152,8 +151,7 @@ const TripPopup:FC<Props> = ({user,bookings,setBookings,trip, onClose}) => {
                   type="number"
                   required
                 />
-                {!isNumberOfGuestsValid && (<div>Only from 0 to 10 guests</div>)}
-              </label>
+              </Label>
               <span className="book-trip-popup__total">
                 Total:
                 <output
