@@ -11,7 +11,7 @@ const Footer = () => {
         with
         <img
           className="footer__icon"
-          src="/src/assets/images/heart.svg"
+          src="/public/images/heart.svg"
           alt="heart"
         />
       </span>

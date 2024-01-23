@@ -20,7 +20,7 @@ const TripCard: FC<Props> = ({ trip }) => {
           <div className="trip-info__content">
             <img
               className="trip-info__calendar-img"
-              src="/src/assets/images/calendar.svg"
+              src="/public/images/calendar.svg"
               alt="calendar"
             />
             <span
