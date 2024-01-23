@@ -22,40 +22,19 @@ const TripPopup:FC<Props> = ({user,bookings,setBookings,trip, onClose}) => {
   const [date, setDate] = useState(formatDate(getTomorrowDate().toISOString()))
   const [isNumberOfGuestsValid, setIsNumberOfGuestsValid] = useState(true)
 
-  const validateNumberOfGuests = (guests:number) => {
-    if (guests < 1) {
-      setIsNumberOfGuestsValid(false)
-      return
-    }
-    if (guests > 10){
-      setIsNumberOfGuestsValid(false)
-      return
-    }
-    setIsNumberOfGuestsValid(true)
-    
-  }
+  const validateNumberOfGuests = (guests:number) => guests < 1 || guests > 10 ? setIsNumberOfGuestsValid(false) : setIsNumberOfGuestsValid(true)
 
-  const validateDate = (newDate:string) => {
-    const isBefore = isTomorrowOrLater(newDate)
-    if(!isBefore) {
-
-      setDate(formatDate(getTomorrowDate().toISOString()))
-      return
-    }
-    setDate(newDate)
+  const handleSetAndValidateDate = (e:ChangeEvent<HTMLInputElement>) => {
+    const  date = e.target.value
+    const isTomorrow = isTomorrowOrLater(date)
+    isTomorrow ? setDate(date) : setDate(formatDate(getTomorrowDate().toISOString()))
   }
 
  const handleSetGuests = (e: ChangeEvent<HTMLInputElement>) => {
-  const value = +e.target.value
+  const value = Number(e.target.value)
   validateNumberOfGuests(value)
   setGuests(value)
  }
-
- const handleSetDate = (e:ChangeEvent<HTMLInputElement>) => {
-  const  date = e.target.value
-  validateDate(date)
- }
-  
 
  const handleFormSubmit = (e:FormEvent<HTMLFormElement>) => {
   e.preventDefault()
@@ -98,8 +77,6 @@ const TripPopup:FC<Props> = ({user,bookings,setBookings,trip, onClose}) => {
   onClose()
  }
 
-
-
     return(
         <div>
         <div className="modal">
@@ -135,7 +112,7 @@ const TripPopup:FC<Props> = ({user,bookings,setBookings,trip, onClose}) => {
               <Label className="input" name="Date">
               <Input
                   value={date}
-                  onChange={handleSetDate}
+                  onChange={handleSetAndValidateDate}
                   testId="book-trip-popup-date"
                   name="date"
                   type="date"

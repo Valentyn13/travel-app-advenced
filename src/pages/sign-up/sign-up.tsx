@@ -17,23 +17,12 @@ const SignUpPage:FC<Props> = ({ setUser}) => {
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
   const [validEmail, setValidEmail] = useState(false)
   const [passwordValid, setPasswordValid] = useState(false)
 
-  const handleFullNameInput = (e:ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.value
-    setFullName(name)
-  }
-  const handleEmailInput = (e:ChangeEvent<HTMLInputElement>) => {
-    const email = e.target.value
-    setEmail(email)
-  }
-
-  const handlePasswordInput = (e:ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setPassword(value)
-  }
+  const handleFullNameInput = (e:ChangeEvent<HTMLInputElement>) => setFullName(e.target.value)
+  const handleEmailInput = (e:ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)
+  const handlePasswordInput = (e:ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)
 
   const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault()

@@ -6,6 +6,7 @@ import { isValidEmail, isPasswordLenghtValid } from "../../helpers/email.helpers
 import Button from "../../components/common/button/button";
 import Input from "../../components/common/input/input";
 import Label from "../../components/common/label/label";
+
 type Props ={
   setUser:Dispatch<SetStateAction<IUser | null>>
 }
@@ -15,20 +16,11 @@ const SignInPage:FC<Props> = ({setUser}) => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
   const [validEmail, setValidEmail] = useState(false)
   const [passwordValid, setPasswordValid] = useState(false)
 
-  const handleEmailInput = (e:ChangeEvent<HTMLInputElement>) => {
-    const email = e.target.value
-    setEmail(email)
-  }
-
-  const handlePasswordInput = (e:ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setPassword(value)
-  }
-
+  const handleEmailInput = (e:ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)
+  const handlePasswordInput = (e:ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)
 
   const handleValidateEmail= () => {
     const valid = isValidEmail(email)
@@ -40,21 +32,16 @@ const SignInPage:FC<Props> = ({setUser}) => {
     setPasswordValid(valid)
   }
 
-
   const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     setUser({
       fullName: 'Test',
       email,
       password,
       id: self.crypto.randomUUID()
     })
-
-    navigate(ROUTES.MAIN)
     navigate(ROUTES.MAIN)
   }
-
 
     return(
         <main className="sign-in-page">

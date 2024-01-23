@@ -19,18 +19,13 @@ type Props = {
 const TripDeteilsPage:FC<Props> = ({user, bookings, setBookings}) => {
 
   const location = useLocation()
-
   const {trip} = location.state as ITripDetails
   const {title, image, description, duration, price, level} = trip
 
   const [isBookModalOpen, setIsBookModalOpen] = useState(false)
 
-  const handleOpenBookModal = () => {
-    setIsBookModalOpen(true)
-  }
-  const handleCloseBookModal = () => {
-    setIsBookModalOpen(false)
-  }
+  const handleOpenBookModal = () => setIsBookModalOpen(true)
+  const handleCloseBookModal = () => setIsBookModalOpen(false)
 
     return(
         <main className="trip-page">
