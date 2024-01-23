@@ -7,6 +7,7 @@ import Button from "../../components/common/button/button";
 import { IUser } from "../../types/user.types";
 import { IBookingList } from "../../types/booking.types";
 import { ITrip } from "../../types/trip.types";
+import TripInfo from "../../components/trip-info/trip-info";
 
 type ITripDetails = {
   trip: ITrip;
@@ -39,25 +40,7 @@ const TripDeteilsPage: FC<Props> = ({ user, bookings, setBookings }) => {
           alt="trip photo"
         />
         <div className="trip__content">
-          <div className="trip-info">
-            <h3 data-test-id="trip-details-title" className="trip-info__title">
-              {title}
-            </h3>
-            <div className="trip-info__content">
-              <span
-                data-test-id="trip-details-duration"
-                className="trip-info__duration"
-              >
-                <strong>{duration}</strong> days
-              </span>
-              <span
-                data-test-id="trip-details-level"
-                className="trip-info__level"
-              >
-                {level}
-              </span>
-            </div>
-          </div>
+          <TripInfo title={title} duration={duration} level={level}/>
           <div
             data-test-id="trip-details-description"
             className="trip__description"

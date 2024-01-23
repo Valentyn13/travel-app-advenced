@@ -13,7 +13,7 @@ const HeaderNavigation = () => {
             className="nav-header__inner"
           >
             <span className="visually-hidden">Bookings</span>
-            <img src="/public/images/briefcase.svg" alt="bookings" />
+            <img src="/images/briefcase.svg" alt="bookings" />
           </Link>
         </li>
         <li className="nav-header__item" title="Profile">
@@ -23,7 +23,7 @@ const HeaderNavigation = () => {
             tabIndex={0}
           >
             <span className="visually-hidden">Profile</span>
-            <img src="/public/images/user.svg" alt="profile" />
+            <img src="/images/user.svg" alt="profile" />
             <ProfileList />
           </div>
         </li>
