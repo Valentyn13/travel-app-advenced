@@ -4,6 +4,7 @@ import { ChangeEvent, Dispatch, FC, FormEvent, SetStateAction, useState } from "
 import { IUser } from "../../types/user.types";
 import { isValidEmail, isPasswordLenghtValid } from "../../helpers/email.helpers";
 import Button from "../../components/common/button/button";
+import Input from "../../components/common/input/input";
 type Props ={
   setUser:Dispatch<SetStateAction<IUser | null>>
 }
@@ -61,19 +62,27 @@ const SignInPage:FC<Props> = ({setUser}) => {
           <h2 className="sign-in-form__title">Sign In</h2>
           <label className="input">
             <span className="input__heading">Email</span>
-            <input data-test-id="auth-email" name="email" type="email" onChange={handleEmailInput} onBlur={handleValidateEmail} required />
+            <Input
+            testId="auth-email"
+            name="email"
+            type="email"
+            onChange={handleEmailInput}
+            onBlur={handleValidateEmail}
+            required
+            value={email}
+            />
             {!validEmail && (<div>Email is not valid</div>)}
           </label>
           <label className="input">
             <span className="input__heading">Password</span>
-            <input
-              onChange={handlePasswordInput}
-              onBlur={handlePasswordValidate}
-              data-test-id="auth-password"
-              name="password"
-              type="password"
-              autoComplete="new-password"
-              required
+            <Input
+            value={password}
+            onChange={handlePasswordInput}
+            onBlur={handlePasswordValidate}
+            testId="auth-password"
+            name="password"
+            type="password"
+            required
             />
             {!passwordValid && (<div>Password must have from 3 to 20 characters</div>)}
           </label>

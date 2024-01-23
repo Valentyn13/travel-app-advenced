@@ -1,5 +1,6 @@
 import { ChangeEvent, FC } from "react";
 import { DURATION, LEVEL } from "../../types/filter.types";
+import Input from "../common/input/input";
 
 type Props = {
     titleValue:string
@@ -17,10 +18,10 @@ const TripFilter:FC<Props> = ({titleValue, handleDurationChange, handleLevelChan
         <form className="trips-filter__form" autoComplete="off">
           <label className="trips-filter__search input">
             <span className="visually-hidden">Search by name</span>
-            <input
+            <Input
               value={titleValue}
               onChange={handleTitleChange}
-              data-test-id="filter-search"
+              testId="filter-search"
               name="search"
               type="search"
               placeholder="search by title"

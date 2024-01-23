@@ -4,6 +4,7 @@ import { formatDate, getTomorrowDate, isTomorrowOrLater } from "../../helpers/da
 import { IBooking, IBookingList } from "../../types/booking.types";
 import { IUser } from "../../types/user.types";
 import Button from "../../components/common/button/button";
+import Input from "../../components/common/input/input";
 
 type Props = {
   user:null|IUser;
@@ -132,10 +133,10 @@ const TripPopup:FC<Props> = ({user,bookings,setBookings,trip, onClose}) => {
               </div>
               <label className="input">
                 <span className="input__heading">Date</span>
-                <input
+                <Input
                   value={date}
                   onChange={handleSetDate}
-                  data-test-id="book-trip-popup-date"
+                  testId="book-trip-popup-date"
                   name="date"
                   type="date"
                   required
@@ -143,12 +144,12 @@ const TripPopup:FC<Props> = ({user,bookings,setBookings,trip, onClose}) => {
               </label>
               <label className="input">
                 <span className="input__heading">Number of guests</span>
-                <input
+                <Input
                   onChange={handleSetGuests}
-                  data-test-id="book-trip-popup-guests"
-                  name="guests"
+                  value={`${guests}`}
+                  name="quests"
+                  testId="book-trip-popup-guests"
                   type="number"
-                  value={guests}
                   required
                 />
                 {!isNumberOfGuestsValid && (<div>Only from 0 to 10 guests</div>)}
