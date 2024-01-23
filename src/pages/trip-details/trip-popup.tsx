@@ -19,6 +19,7 @@ import {
 import { IBooking, IBookingList } from "../../types/booking.types";
 import { IUser } from "../../types/user.types";
 import { ITrip } from "../../types/trip.types";
+import TripInfo from "../../components/trip-info/trip-info";
 
 type Props = {
   user: null | IUser;
@@ -91,33 +92,7 @@ const TripPopup: FC<Props> = ({ bookings, setBookings, trip, onClose }) => {
             className="book-trip-popup__form"
             autoComplete="off"
           >
-            <div className="trip-info">
-              <h3
-                data-test-id="book-trip-popup-title"
-                className="trip-info__title"
-              >
-                {title}
-              </h3>
-              <div className="trip-info__content">
-                <img
-                  className="trip-info__calendar-img"
-                  src="/src/assets/images/calendar.svg"
-                  alt="calendar"
-                />
-                <span
-                  data-test-id="book-trip-popup-duration"
-                  className="trip-info__duration"
-                >
-                  <strong>{duration}</strong> days
-                </span>
-                <span
-                  data-test-id="book-trip-popup-level"
-                  className="trip-info__level"
-                >
-                  {level}
-                </span>
-              </div>
-            </div>
+            <TripInfo title={title} duration={duration} level={level} />
             <Label className="input" name="Date">
               <Input
                 value={date}
