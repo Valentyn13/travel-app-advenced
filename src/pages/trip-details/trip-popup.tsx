@@ -99,11 +99,6 @@ const TripPopup: FC<Props> = ({ bookings, setBookings, trip, onClose }) => {
                 {title}
               </h3>
               <div className="trip-info__content">
-                <img
-                  className="trip-info__calendar-img"
-                  src="/public/images/calendar.svg"
-                  alt="calendar"
-                />
                 <span
                   data-test-id="book-trip-popup-duration"
                   className="trip-info__duration"
