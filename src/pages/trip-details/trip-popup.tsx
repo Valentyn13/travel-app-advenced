@@ -17,12 +17,10 @@ import {
   isTomorrowOrLater,
 } from "../../helpers/date.helpers";
 import { IBooking, IBookingList } from "../../types/booking.types";
-import { IUser } from "../../types/user.types";
 import { ITrip } from "../../types/trip.types";
 import TripInfo from "../../components/trip-info/trip-info";
 
 type Props = {
-  user: null | IUser;
   bookings: IBookingList;
   setBookings: Dispatch<SetStateAction<IBookingList>>;
   trip: ITrip;

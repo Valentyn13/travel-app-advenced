@@ -2,8 +2,6 @@ import { Dispatch, FC, SetStateAction } from "react";
 
 import { IBooking, IBookingList } from "../../types/booking.types";
 import { formatDate } from "../../helpers/date.helpers";
-import { useAppDispatch } from "../../redux/hooks";
-import { testAction } from "../../redux/slices/user/user.slice";
 
 type Props = {
   booking: IBooking;
@@ -13,11 +11,9 @@ type Props = {
 
 const BookingCard: FC<Props> = ({ booking, bookings, setBookings }) => {
   const { guests, trip, date, totalPrice, id } = booking;
-  const dispatch = useAppDispatch()
 
   const handleCancelBooking = () => {
     const fitered = bookings.filter((booking) => booking.id !== id);
-    dispatch(testAction('Test payload to check if redux works'))
     setBookings(fitered);
   };
   return (
