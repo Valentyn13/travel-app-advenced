@@ -2,10 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import {
   ChangeEvent,
-  Dispatch,
   FC,
   FormEvent,
-  SetStateAction,
   useState,
 } from "react";
 
@@ -18,15 +16,12 @@ import {
   isPasswordLenghtValid,
 } from "../../helpers/email.helpers";
 import { ROUTES } from "../../types/routes.types";
-import { IUser } from "../../types/user.types";
+import { useAppDispatch } from "../../redux/hooks";
+import { signInUser } from "../../redux/slices/user/actions";
 
-
-type Props = {
-  setUser: Dispatch<SetStateAction<IUser | null>>;
-};
-
-const SignInPage: FC<Props> = ({ setUser }) => {
+const SignInPage: FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch()
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,13 +45,9 @@ const SignInPage: FC<Props> = ({ setUser }) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setUser({
-      fullName: "Test",
-      email,
-      password,
-      id: self.crypto.randomUUID(),
-    });
+    dispatch(signInUser({email,password}))
     navigate(ROUTES.MAIN);
+    
   };
 
   return (

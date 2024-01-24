@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import {  useState } from "react";
+import { Navigate, Route, Routes  } from "react-router-dom";
 
 import Layout from "./pages/layout/layout";
 import MainPage from "./pages/main/main";
@@ -10,25 +10,41 @@ import BookingsPage from "./pages/bookings/bookings";
 
 import { BOOKINGS, TRIPS } from "./data/data";
 import { IBookingList } from "./types/booking.types";
-import { IUser } from "./types/user.types";
 import { ITripList } from "./types/trip.types";
 import { ROUTES } from "./types/routes.types";
+import PrivateRoute from "./components/private-route/private-rote";
+import { useAppSelector } from "./redux/hooks";
+
 
 const App =() => {
+
+  const user = useAppSelector(state => state.user.user)
+  
   const [trips, setTrips] = useState<ITripList>(TRIPS)
   const [bookings, setBookings] = useState<IBookingList>(BOOKINGS)
-  const [user, setUser] = useState<null|IUser>(null)
 
   return (
     <>
       <Routes>
           <Route path={ROUTES.MAIN} element={<Layout/>}>
-              <Route index element={<MainPage onTripsChange={setTrips} trips={trips}/>}/>
-              <Route path={ROUTES.SIGN_UP} element={<SignUpPage setUser={setUser}/>}/>
-              <Route path={ROUTES.SIGN_IN} element={<SignInPage setUser={setUser}/>}/>
-              <Route path={ROUTES.TRIP_DETAILS} element={<TripDeteilsPage bookings={bookings} setBookings={setBookings} user={user}/>}/>
-              <Route path={ROUTES.BOOKINGS} element={<BookingsPage setBookings={setBookings} bookings={bookings}/>}/>
-              <Route path="*" element={<Navigate to={ROUTES.MAIN}/>}/>
+              <Route index element={
+                  <MainPage onTripsChange={setTrips} trips={trips}/>
+                }/>
+              <Route path={ROUTES.SIGN_UP} element={<SignUpPage/>}/>
+              <Route path={ROUTES.SIGN_IN} element={<SignInPage/>}/>
+              <Route path={ROUTES.TRIP_DETAILS} element={
+                <PrivateRoute user={user} redirectPath={ROUTES.SIGN_IN}>
+                  <TripDeteilsPage bookings={bookings} setBookings={setBookings}/>
+                </PrivateRoute>
+                }/>
+              <Route path={ROUTES.BOOKINGS} element={
+                <PrivateRoute user={user} redirectPath={ROUTES.SIGN_IN}>
+                  <BookingsPage setBookings={setBookings} bookings={bookings}/>
+                </PrivateRoute>
+              }/>
+              <Route path="*" element={
+                  <Navigate to={ROUTES.MAIN}/>
+              }/>
           </Route>
       </Routes>
     </>
