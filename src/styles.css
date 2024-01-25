@@ -460,7 +460,9 @@ select {
   border-radius: 1px;
   box-shadow: var(--shadow);
 }
-
+.trip-card img{
+  height: 174px;
+}
 .trip-card__content {
   display: flex;
   flex-direction: column;

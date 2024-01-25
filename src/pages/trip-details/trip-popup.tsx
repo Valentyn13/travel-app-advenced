@@ -1,9 +1,4 @@
-import {
-  ChangeEvent,
-  FC,
-  FormEvent,
-  useState,
-} from "react";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
 
 import Button from "../../components/common/button/button";
 import Input from "../../components/common/input/input";
@@ -29,8 +24,8 @@ type Props = {
 const TripPopup: FC<Props> = ({ trip, onClose }) => {
   const { title, duration, level, id } = trip;
 
-  const dispatch = useAppDispatch()
-  const user = useAppSelector(state => state.user.user) as IUser
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user.user) as IUser;
 
   const [guests, setGuests] = useState<number>(1);
   const [date, setDate] = useState(formatDate(getTomorrowDate().toISOString()));
@@ -57,13 +52,13 @@ const TripPopup: FC<Props> = ({ trip, onClose }) => {
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newBooking:CreateBookingDto = {
+    const newBooking: CreateBookingDto = {
       userId: user.id,
       tripId: id,
       guests,
       date,
     };
-    dispatch(createBooking(newBooking))
+    dispatch(createBooking(newBooking));
     onClose();
   };
 

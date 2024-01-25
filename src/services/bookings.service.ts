@@ -1,40 +1,43 @@
-import { CreateBookingDto, IBooking, IBookingList } from "../types/booking.types"
-import httpApi from "./http.service"
+import {
+  CreateBookingDto,
+  IBooking,
+  IBookingList,
+} from "../types/booking.types";
+import httpApi from "./http.service";
 
-const BASE_URL = 'https://travel-app-api.up.railway.app/api/v1'
+const BASE_URL = "https://travel-app-api.up.railway.app/api/v1";
 
 class BookingApi {
-    #apiPath ='/bookings'
+  #apiPath = "/bookings";
 
-    async getUserBookings ():Promise<IBookingList> {
-        return httpApi.load(`${BASE_URL}${this.#apiPath}`,{
-            method:'GET',
-            payload:null,
-            hasAuth:true,
-            contentType:'application/json'
-        })
-    }
+  async getUserBookings(): Promise<IBookingList> {
+    return httpApi.load(`${BASE_URL}${this.#apiPath}`, {
+      method: "GET",
+      payload: null,
+      hasAuth: true,
+      contentType: "application/json",
+    });
+  }
 
-    async createBooking(booking:CreateBookingDto):Promise<IBooking> {
-        return httpApi.load(`${BASE_URL}${this.#apiPath}`,{
-            method:'POST',
-            payload:JSON.stringify(booking),
-            hasAuth:true,
-            contentType:'application/json'
-        })
-    }
+  async createBooking(booking: CreateBookingDto): Promise<IBooking> {
+    return httpApi.load(`${BASE_URL}${this.#apiPath}`, {
+      method: "POST",
+      payload: JSON.stringify(booking),
+      hasAuth: true,
+      contentType: "application/json",
+    });
+  }
 
-    async cancelBooking (bookingId:string):Promise<boolean>{
-        return httpApi.load(`${BASE_URL}${this.#apiPath}/${bookingId}`,{
-            method:'DELETE',
-            payload:null,
-            hasAuth:true,
-            contentType:'application/json'
-        })
-    }
+  async cancelBooking(bookingId: string): Promise<boolean> {
+    return httpApi.load(`${BASE_URL}${this.#apiPath}/${bookingId}`, {
+      method: "DELETE",
+      payload: null,
+      hasAuth: true,
+      contentType: "application/json",
+    });
+  }
 }
 
+const bookingApi = new BookingApi();
 
-const bookingApi = new BookingApi()
-
-export default bookingApi
+export default bookingApi;

@@ -1,14 +1,14 @@
+import LinkButton from "../common/link-button/link-button";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { signOut } from "../../redux/slices/user/user.slice";
 import { ROUTES } from "../../types/routes.types";
-import LinkButton from "../common/link-button/link-button";
 
 const ProfileList = () => {
-  const dispatch = useAppDispatch()
-  const user = useAppSelector(state => state.user.user)
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user.user);
   const handleSignOut = () => {
-    dispatch(signOut())
-  }
+    dispatch(signOut());
+  };
   return (
     <ul data-test-id="header-profile-nav-list" className="profile-nav__list">
       <li
@@ -19,7 +19,7 @@ const ProfileList = () => {
       </li>
       <li className="profile-nav__item">
         <LinkButton
-        onClick={handleSignOut}
+          onClick={handleSignOut}
           to={ROUTES.SIGN_IN}
           testId="header-profile-nav-sign-out"
           aditionClassNames="profile-nav__sign-out"

@@ -7,7 +7,7 @@ type Props = {
   aditionClassNames?: string;
   children: string | ReactNode;
   state?: object;
-  onClick?:() => void
+  onClick?: () => void;
 };
 
 const LinkButton: FC<Props> = ({
@@ -16,7 +16,7 @@ const LinkButton: FC<Props> = ({
   testId,
   aditionClassNames,
   children,
-  onClick
+  onClick,
 }) => {
   return (
     <Link

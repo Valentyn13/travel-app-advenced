@@ -14,7 +14,7 @@ const TripCard: FC<Props> = ({ trip }) => {
     <li data-test-id="trip-card" className="trip-card">
       <img data-test-id="trip-card-image" src={image} alt="trip photo" />
       <div className="trip-card__content">
-        <TripInfo title={title} duration={duration} level={level}/>
+        <TripInfo title={title} duration={duration} level={level} />
         <div className="trip-price">
           <span>Price</span>
           <strong

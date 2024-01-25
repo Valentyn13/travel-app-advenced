@@ -13,12 +13,7 @@ const BookingList: FC<Props> = ({ bookings }) => {
   return (
     <ul className="bookings__list">
       {sortedBookings.map((booking) => {
-        return (
-          <BookingCard
-            key={booking.id}
-            booking={booking}
-          />
-        );
+        return <BookingCard key={booking.id} booking={booking} />;
       })}
     </ul>
   );

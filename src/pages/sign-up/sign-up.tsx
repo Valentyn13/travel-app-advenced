@@ -1,10 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import {
-  ChangeEvent,
-  FC,
-  FormEvent,
-  useState,
-} from "react";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
 
 import Button from "../../components/common/button/button";
 import Input from "../../components/common/input/input";
@@ -20,7 +15,7 @@ import { signUpUser } from "../../redux/slices/user/actions";
 
 const SignUpPage: FC = () => {
   const navigate = useNavigate();
-  const dispath = useAppDispatch()
+  const dispath = useAppDispatch();
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -37,7 +32,7 @@ const SignUpPage: FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispath(signUpUser({fullName,email,password}))
+    dispath(signUpUser({ fullName, email, password }));
     navigate(ROUTES.MAIN);
   };
 

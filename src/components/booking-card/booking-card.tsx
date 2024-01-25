@@ -1,4 +1,4 @@
-import { FC,  } from "react";
+import { FC } from "react";
 
 import { IBooking } from "../../types/booking.types";
 import { formatDate } from "../../helpers/date.helpers";
@@ -11,10 +11,13 @@ type Props = {
 
 const BookingCard: FC<Props> = ({ booking }) => {
   const { guests, trip, date, totalPrice, id } = booking;
-  const dispatch = useAppDispatch()
+
+  const dispatch = useAppDispatch();
+
   const handleCancelBooking = () => {
-    dispatch(cancelBooking(id))
-  };  
+    dispatch(cancelBooking(id));
+  };
+  
   return (
     <li data-test-id="booking" className="booking">
       <h3 data-test-id="booking-title" className="booking__title">

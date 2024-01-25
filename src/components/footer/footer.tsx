@@ -9,11 +9,7 @@ const Footer = () => {
           binary studio
         </Link>
         with
-        <img
-          className="footer__icon"
-          src="/images/heart.svg"
-          alt="heart"
-        />
+        <img className="footer__icon" src="/images/heart.svg" alt="heart" />
       </span>
     </footer>
   );

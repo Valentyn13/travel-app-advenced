@@ -6,11 +6,8 @@ interface IPrivateRouteProps {
   children: ReactNode;
 }
 
-const PrivateRoute: FC<IPrivateRouteProps> = ({
-    redirectPath,
-    children,
-}) => {
-  const token = localStorage.getItem('token')
+const PrivateRoute: FC<IPrivateRouteProps> = ({ redirectPath, children }) => {
+  const token = localStorage.getItem("token");
   if (!token) return <Navigate to={redirectPath} />;
 
   return children ? children : <Outlet />;

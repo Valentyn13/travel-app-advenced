@@ -1,11 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 
-import {
-  ChangeEvent,
-  FC,
-  FormEvent,
-  useState,
-} from "react";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
 
 import Button from "../../components/common/button/button";
 import Input from "../../components/common/input/input";
@@ -21,7 +16,7 @@ import { signInUser } from "../../redux/slices/user/actions";
 
 const SignInPage: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,9 +40,8 @@ const SignInPage: FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(signInUser({email,password}))
+    dispatch(signInUser({ email, password }));
     navigate(ROUTES.MAIN);
-    
   };
 
   return (
