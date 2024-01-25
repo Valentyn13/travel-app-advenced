@@ -1,9 +1,4 @@
-interface OptionsType {
-  method: "GET" | "POST" | "PUT" | "DELETE";
-  payload: BodyInit | null;
-  hasAuth: boolean;
-  contentType: "application/json";
-}
+import { OptionsType } from "../types/optionts.types";
 
 class Http {
   public async load<T>(url: string, options: OptionsType): Promise<T> | never {
@@ -35,7 +30,6 @@ class Http {
         `Code:${response.status}.Message:${parsedException.message}`
       );
     }
-
     return response;
   };
 

@@ -1,12 +1,12 @@
+import httpApi from "./http.service";
+import { BASE_URL } from "./constants/constants";
+
 import {
   SignUpUserDto,
   SignInUserDto,
   UserResponseDto,
   IAuthorizedUserResponse,
 } from "../types/user.types";
-import httpApi from "./http.service";
-
-const BASE_URL = "https://travel-app-api.up.railway.app/api/v1";
 
 class UserApi {
   #signUpPath = "/auth/sign-up";

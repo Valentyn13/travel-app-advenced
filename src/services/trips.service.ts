@@ -1,7 +1,7 @@
-import { ITrip, ITripList } from "../types/trip.types";
 import httpApi from "./http.service";
+import { BASE_URL } from "./constants/constants";
 
-const BASE_URL = "https://travel-app-api.up.railway.app/api/v1";
+import { ITrip, ITripList } from "../types/trip.types";
 
 class TripApi {
   #getAll = "/trips";

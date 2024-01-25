@@ -1,11 +1,11 @@
+import { BASE_URL } from "./constants/constants";
+import httpApi from "./http.service";
+
 import {
   CreateBookingDto,
   IBooking,
   IBookingList,
 } from "../types/booking.types";
-import httpApi from "./http.service";
-
-const BASE_URL = "https://travel-app-api.up.railway.app/api/v1";
 
 class BookingApi {
   #apiPath = "/bookings";
