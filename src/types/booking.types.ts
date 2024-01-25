@@ -14,3 +14,11 @@ export interface IBooking {
 }
 
 export type IBookingList = IBooking[];
+
+
+export interface CreateBookingDto {
+  tripId: string;
+  userId: string;
+  guests: number;
+  date: string;
+}

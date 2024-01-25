@@ -7,8 +7,8 @@ const getAllTrips = createAsyncThunk<ITripList,void>('get-all',async () =>{
  return trips
 })
 
-const getTripDetails = createAsyncThunk<ITrip, string>('get-details',(tripId) => {
-    const trip = tripApi.getTripDetails(tripId)
+const getTripDetails = createAsyncThunk<ITrip, string>('get-details',async (tripId) => {
+    const trip = await tripApi.getTripDetails(tripId)
     return trip
 })
 
