@@ -8,9 +8,8 @@ import SignInPage from "./pages/sign-in/sign-in";
 import TripDeteilsPage from "./pages/trip-details/trip-details";
 import BookingsPage from "./pages/bookings/bookings";
 
-import { BOOKINGS, TRIPS } from "./data/data";
+import { BOOKINGS } from "./data/data";
 import { IBookingList } from "./types/booking.types";
-import { ITripList } from "./types/trip.types";
 import { ROUTES } from "./types/routes.types";
 import PrivateRoute from "./components/private-route/private-rote";
 import { useAppSelector } from "./redux/hooks";
@@ -20,7 +19,6 @@ const App =() => {
 
   const user = useAppSelector(state => state.user.user)
   
-  const [trips, setTrips] = useState<ITripList>(TRIPS)
   const [bookings, setBookings] = useState<IBookingList>(BOOKINGS)
 
   return (
@@ -28,7 +26,7 @@ const App =() => {
       <Routes>
           <Route path={ROUTES.MAIN} element={<Layout/>}>
               <Route index element={
-                  <MainPage onTripsChange={setTrips} trips={trips}/>
+                  <MainPage/>
                 }/>
               <Route path={ROUTES.SIGN_UP} element={<SignUpPage/>}/>
               <Route path={ROUTES.SIGN_IN} element={<SignInPage/>}/>

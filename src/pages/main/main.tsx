@@ -1,25 +1,22 @@
-import { ChangeEvent, Dispatch, FC, useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 
 import TripList from "../../components/trip-list/trip-list";
 import TripFilter from "../../components/tip-filter/trip-filter";
 
 import { filterTrips } from "../../helpers/filter.helpers";
-import { ITripList } from "../../types/trip.types";
 import { DURATION } from "../../types/filter.types";
 import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getAuthenticatedUser } from "../../redux/slices/user/actions";
 import { ROUTES } from "../../types/routes.types";
+import { getAllTrips } from "../../redux/slices/trips/actions";
 
-type Props = {
-  trips: ITripList;
-  onTripsChange: Dispatch<React.SetStateAction<ITripList>>;
-};
-
-const MainPage: FC<Props> = ({ trips }) => {
+const MainPage: FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const {user,error,loading} = useAppSelector(state => state.user)
+
+  const trips = useAppSelector(state => state.trips.trips)
 
   const [durationValue, setDurationValue] = useState<string>(DURATION.UNACTIVE);
   const [levelValue, setLevelValue] = useState<string>("");
@@ -41,7 +38,6 @@ const MainPage: FC<Props> = ({ trips }) => {
   };
 
   useEffect(() => {
-    console.log(user)
 
     if(!user&&!loading){
       const token = localStorage.getItem('token')
@@ -56,6 +52,10 @@ const MainPage: FC<Props> = ({ trips }) => {
     if(error) navigate(ROUTES.SIGN_IN)
 
   },[dispatch,user,error,loading, navigate])
+
+  useEffect(() => {
+    dispatch(getAllTrips())
+  },[])
 
   return (
     <main>
