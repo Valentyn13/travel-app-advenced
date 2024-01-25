@@ -6,6 +6,7 @@ import Button from "../../components/common/button/button";
 import TripInfo from "../../components/trip-info/trip-info";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getTripDetails } from "../../redux/slices/trips/actions";
+import Preloader from "../../components/preloader/preloadert";
 
 
 const TripDeteilsPage: FC = () => {
@@ -66,6 +67,7 @@ const TripDeteilsPage: FC = () => {
           onClose={handleCloseBookModal}
         />
       )}
+      <Preloader/>
       </>
       )}
 
