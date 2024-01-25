@@ -5,14 +5,14 @@ import { getAllTrips, getTripDetails } from "./actions"
 type State ={
     trips: ITripList,
     current: ITrip | null
-    loading:boolean,
+    tripsLoading:boolean,
     error:unknown|null
 }
 
 const initialState: State ={
     trips:[], 
     current:null,
-    loading:false,
+    tripsLoading:false,
     error:null
 }
 
@@ -22,30 +22,30 @@ const {reducer, actions, name} = createSlice({
     reducers:{},
     extraReducers:(builder) =>{
         builder.addCase(getAllTrips.pending,(state) => {
-            state.loading = true
+            state.tripsLoading = true
             state.error = null
         });
         builder.addCase(getAllTrips.fulfilled,(state, action) => {
             state.trips = [...action.payload]
-            state.loading = false
+            state.tripsLoading = false
             state.error = null
         });
         builder.addCase(getAllTrips.rejected,(state,action) => {
             state.error = action.error
-            state.loading = false
+            state.tripsLoading = false
         })
         builder.addCase(getTripDetails.pending,(state) => {
             state.error = null
-            state.loading = true
+            state.tripsLoading = true
         })
         builder.addCase(getTripDetails.fulfilled,(state, action) => {
             state.current = action.payload
             state.error = null
-            state.loading = false
+            state.tripsLoading = false
         })
         builder.addCase(getTripDetails.rejected, (state, action) => {
             state.error = action.error
-            state.loading = false
+            state.tripsLoading = false
         })
     }
 })

@@ -14,10 +14,15 @@ const initialState: State ={
     error: null
 }
 
-const {reducer, name} = createSlice({
+const {reducer, name, actions:{signOut}} = createSlice({
     initialState,
     name:'user',
-    reducers:{},
+    reducers:{
+        signOut: (state) => {
+            state.user = null
+            localStorage.removeItem('token')
+        }
+    },
     extraReducers: (builder)=>{
         builder.addCase(signInUser.fulfilled,(state, action) => {
             const {token, user} = action.payload
@@ -55,6 +60,8 @@ const {reducer, name} = createSlice({
         });
         builder.addCase(getAuthenticatedUser.fulfilled, (state, action) => {
             state.user = action.payload
+            state.loading = false
+            state.error = null
         })
         builder.addCase(getAuthenticatedUser.pending,(state) => {
             state.loading = true
@@ -69,4 +76,4 @@ const {reducer, name} = createSlice({
         })
     }
 })
-export {reducer, name}
+export {reducer, name, signOut}

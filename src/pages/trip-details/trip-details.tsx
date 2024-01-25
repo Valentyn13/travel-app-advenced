@@ -14,6 +14,7 @@ const TripDeteilsPage: FC = () => {
   const dispatch = useAppDispatch()
 
   const details = useAppSelector(state => state.trips.current)
+  const isLoading = useAppSelector(state => state.trips.tripsLoading)
   const [isBookModalOpen, setIsBookModalOpen] = useState(false);
 
   const handleOpenBookModal = () => setIsBookModalOpen(true);
@@ -26,6 +27,7 @@ const TripDeteilsPage: FC = () => {
 
   return (
     <main className="trip-page">
+      {isLoading &&(<Preloader/>)}
       {details && (
       <>
       <h1 className="visually-hidden">Travel App</h1>
@@ -67,7 +69,6 @@ const TripDeteilsPage: FC = () => {
           onClose={handleCloseBookModal}
         />
       )}
-      <Preloader/>
       </>
       )}
 

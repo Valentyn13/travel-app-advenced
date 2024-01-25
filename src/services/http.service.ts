@@ -17,7 +17,6 @@ class Http {
           hasAuth = true,
           contentType = 'application/json',
         } = options;
-        console.log(payload)
         const headers = this.#getHeaders(hasAuth,contentType)
     
         return await fetch(url,{

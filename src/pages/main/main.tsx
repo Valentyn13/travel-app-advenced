@@ -10,13 +10,14 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getAuthenticatedUser } from "../../redux/slices/user/actions";
 import { ROUTES } from "../../types/routes.types";
 import { getAllTrips } from "../../redux/slices/trips/actions";
+import Preloader from "../../components/preloader/preloadert";
 
 const MainPage: FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const {user,error,loading} = useAppSelector(state => state.user)
 
-  const trips = useAppSelector(state => state.trips.trips)
+  const {trips, tripsLoading} = useAppSelector(state => state.trips)
 
   const [durationValue, setDurationValue] = useState<string>(DURATION.UNACTIVE);
   const [levelValue, setLevelValue] = useState<string>("");
@@ -38,11 +39,9 @@ const MainPage: FC = () => {
   };
 
   useEffect(() => {
-
     if(!user&&!loading){
       const token = localStorage.getItem('token')
       if(!token){
-        console.log('nah:', user, token)
         navigate(ROUTES.SIGN_IN)
         return
       }
@@ -54,25 +53,30 @@ const MainPage: FC = () => {
   },[dispatch,user,error,loading, navigate])
 
   useEffect(() => {
+    const token = localStorage.getItem('token')
+    if(token&&user)
     dispatch(getAllTrips())
-  },[])
+  },[dispatch,loading,user])
 
   return (
+    <>
+    {(loading || tripsLoading) && (<Preloader/>)}
     <main>
-      <TripFilter
-        titleValue={titleValue}
-        handleDurationChange={handleDurationChange}
-        handleLevelChange={handleLevelChange}
-        handleTitleChange={handleTitleChange}
-      />
-      <TripList
-        trips={filterTrips(trips, {
-          title: titleValue,
-          duration: durationValue,
-          level: levelValue,
-        })}
-      />
-    </main>
+    <TripFilter
+      titleValue={titleValue}
+      handleDurationChange={handleDurationChange}
+      handleLevelChange={handleLevelChange}
+      handleTitleChange={handleTitleChange}
+    />
+    <TripList
+      trips={filterTrips(trips, {
+        title: titleValue,
+        duration: durationValue,
+        level: levelValue,
+      })}
+    />
+  </main>
+  </>
   );
 };
 

@@ -7,6 +7,7 @@ type Props = {
   aditionClassNames?: string;
   children: string | ReactNode;
   state?: object;
+  onClick?:() => void
 };
 
 const LinkButton: FC<Props> = ({
@@ -15,9 +16,11 @@ const LinkButton: FC<Props> = ({
   testId,
   aditionClassNames,
   children,
+  onClick
 }) => {
   return (
     <Link
+      onClick={onClick}
       to={to}
       data-test-id={testId}
       className={aditionClassNames ? `button ${aditionClassNames}` : "button"}

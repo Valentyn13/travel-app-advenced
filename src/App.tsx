@@ -9,11 +9,9 @@ import BookingsPage from "./pages/bookings/bookings";
 
 import { ROUTES } from "./types/routes.types";
 import PrivateRoute from "./components/private-route/private-rote";
-import { useAppSelector } from "./redux/hooks";
 
 
 const App =() => {
-  const user = useAppSelector(state => state.user.user)
   return (
     <>
       <Routes>
@@ -24,12 +22,12 @@ const App =() => {
               <Route path={ROUTES.SIGN_UP} element={<SignUpPage/>}/>
               <Route path={ROUTES.SIGN_IN} element={<SignInPage/>}/>
               <Route path={ROUTES.TRIP_DETAILS} element={
-                <PrivateRoute user={user} redirectPath={ROUTES.SIGN_IN}>
+                <PrivateRoute redirectPath={ROUTES.SIGN_IN}>
                   <TripDeteilsPage />
                 </PrivateRoute>
                 }/>
               <Route path={ROUTES.BOOKINGS} element={
-                <PrivateRoute user={user} redirectPath={ROUTES.SIGN_IN}>
+                <PrivateRoute redirectPath={ROUTES.SIGN_IN}>
                   <BookingsPage/>
                 </PrivateRoute>
               }/>
