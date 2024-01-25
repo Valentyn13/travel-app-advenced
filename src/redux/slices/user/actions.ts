@@ -1,11 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
+import userApi from "../../../services/user.service";
+
 import {
   IAuthorizedUserResponse,
   SignInUserDto,
   SignUpUserDto,
   UserResponseDto,
 } from "../../../types/user.types";
-import userApi from "../../../services/user.service";
 
 const signUpUser = createAsyncThunk<UserResponseDto, SignUpUserDto>(
   "sign-up",

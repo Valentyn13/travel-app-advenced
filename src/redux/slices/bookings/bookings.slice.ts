@@ -1,6 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { IBookingList } from "../../../types/booking.types";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+
 import { cancelBooking, createBooking, getUserBookings } from "./actions";
+
+import { IBookingList } from "../../../types/booking.types";
 
 type State = {
   bookings: IBookingList;
@@ -19,38 +21,15 @@ const { reducer, actions, name } = createSlice({
   name: "bookings",
   reducers: {},
   extraReducers: (builder) => {
-    // get bookings
-    builder.addCase(getUserBookings.pending, (state) => {
-      state.error = null;
-      state.loading = true;
-    });
     builder.addCase(getUserBookings.fulfilled, (state, action) => {
       state.bookings = [...action.payload];
       state.error = null;
       state.loading = false;
     });
-    builder.addCase(getUserBookings.rejected, (state, action) => {
-      state.error = action.error;
-      state.loading = false;
-    });
-    // creat booking
-    builder.addCase(createBooking.pending, (state) => {
-      state.error = null;
-      state.loading = true;
-    });
     builder.addCase(createBooking.fulfilled, (state, action) => {
       state.bookings.push(action.payload);
       state.error = null;
       state.loading = false;
-    });
-    builder.addCase(createBooking.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error;
-    });
-    // cancel booking
-    builder.addCase(cancelBooking.pending, (state) => {
-      state.error = null;
-      state.loading = true;
     });
     builder.addCase(cancelBooking.fulfilled, (state, action) => {
       const { isDeleted, bookingId } = action.payload;
@@ -62,10 +41,28 @@ const { reducer, actions, name } = createSlice({
       state.loading = false;
       state.error = null;
     });
-    builder.addCase(cancelBooking.rejected, (state, action) => {
-      state.error = action.error;
-      state.loading = false;
-    });
+    builder.addMatcher(
+      isAnyOf(
+        getUserBookings.pending,
+        createBooking.pending,
+        cancelBooking.pending
+      ),
+      (state) => {
+        state.error = null;
+        state.loading = true;
+      }
+    );
+    builder.addMatcher(
+      isAnyOf(
+        getUserBookings.rejected,
+        createBooking.rejected,
+        cancelBooking.rejected
+      ),
+      (state, action) => {
+        state.error = action.error;
+        state.loading = false;
+      }
+    );
   },
 });
 

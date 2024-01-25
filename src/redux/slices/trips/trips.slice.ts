@@ -1,6 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { ITrip, ITripList } from "../../../types/trip.types";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+
 import { getAllTrips, getTripDetails } from "./actions";
+
+import { ITrip, ITripList } from "../../../types/trip.types";
 
 type State = {
   trips: ITripList;
@@ -21,32 +23,30 @@ const { reducer, actions, name } = createSlice({
   name: "trips",
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAllTrips.pending, (state) => {
-      state.tripsLoading = true;
-      state.error = null;
-    });
     builder.addCase(getAllTrips.fulfilled, (state, action) => {
       state.trips = [...action.payload];
       state.tripsLoading = false;
       state.error = null;
-    });
-    builder.addCase(getAllTrips.rejected, (state, action) => {
-      state.error = action.error;
-      state.tripsLoading = false;
-    });
-    builder.addCase(getTripDetails.pending, (state) => {
-      state.error = null;
-      state.tripsLoading = true;
     });
     builder.addCase(getTripDetails.fulfilled, (state, action) => {
       state.current = action.payload;
       state.error = null;
       state.tripsLoading = false;
     });
-    builder.addCase(getTripDetails.rejected, (state, action) => {
-      state.error = action.error;
-      state.tripsLoading = false;
-    });
+    builder.addMatcher(
+      isAnyOf(getAllTrips.pending, getTripDetails.pending),
+      (state) => {
+        state.error = null;
+        state.tripsLoading = true;
+      }
+    );
+    builder.addMatcher(
+      isAnyOf(getAllTrips.rejected, getTripDetails.rejected),
+      (state, action) => {
+        state.error = action.error;
+        state.tripsLoading = false;
+      }
+    );
   },
 });
 
