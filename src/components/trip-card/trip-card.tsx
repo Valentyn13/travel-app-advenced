@@ -27,7 +27,6 @@ const TripCard: FC<Props> = ({ trip }) => {
       </div>
       <LinkButton
         to={`/trip/${id}`}
-        state={{ trip }}
         children={`Discover a trip`}
         testId="trip-card-link"
       />

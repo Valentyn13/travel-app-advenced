@@ -1,9 +1,7 @@
 import {
   ChangeEvent,
-  Dispatch,
   FC,
   FormEvent,
-  SetStateAction,
   useState,
 } from "react";
 
@@ -16,19 +14,23 @@ import {
   getTomorrowDate,
   isTomorrowOrLater,
 } from "../../helpers/date.helpers";
-import { IBooking, IBookingList } from "../../types/booking.types";
 import { ITrip } from "../../types/trip.types";
 import TripInfo from "../../components/trip-info/trip-info";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { IUser } from "../../types/user.types";
+import { CreateBookingDto } from "../../types/booking.types";
+import { createBooking } from "../../redux/slices/bookings/actions";
 
 type Props = {
-  bookings: IBookingList;
-  setBookings: Dispatch<SetStateAction<IBookingList>>;
   trip: ITrip;
   onClose: () => void;
 };
 
-const TripPopup: FC<Props> = ({ bookings, setBookings, trip, onClose }) => {
-  const { title, duration, level } = trip;
+const TripPopup: FC<Props> = ({ trip, onClose }) => {
+  const { title, duration, level, id } = trip;
+
+  const dispatch = useAppDispatch()
+  const user = useAppSelector(state => state.user.user) as IUser
 
   const [guests, setGuests] = useState<number>(1);
   const [date, setDate] = useState(formatDate(getTomorrowDate().toISOString()));
@@ -55,22 +57,13 @@ const TripPopup: FC<Props> = ({ bookings, setBookings, trip, onClose }) => {
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newBooking: IBooking = {
-      id: self.crypto.randomUUID(),
-      userId: self.crypto.randomUUID(),
-      tripId: trip.id,
+    const newBooking:CreateBookingDto = {
+      userId: user.id,
+      tripId: id,
       guests,
       date,
-      trip: {
-        title: trip.title,
-        duration: trip.duration,
-        price: trip.price,
-      },
-      totalPrice: guests * trip.price,
-      createdAt: new Date().toISOString(),
     };
-
-    setBookings([...bookings, newBooking]);
+    dispatch(createBooking(newBooking))
     onClose();
   };
 

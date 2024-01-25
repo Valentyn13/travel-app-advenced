@@ -1,15 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { ITripList } from "../../../types/trip.types"
-import { getAllTrips } from "./actions"
+import { ITrip, ITripList } from "../../../types/trip.types"
+import { getAllTrips, getTripDetails } from "./actions"
 
 type State ={
     trips: ITripList,
+    current: ITrip | null
     loading:boolean,
     error:unknown|null
 }
 
 const initialState: State ={
-    trips:[],
+    trips:[], 
+    current:null,
     loading:false,
     error:null
 }
@@ -29,6 +31,19 @@ const {reducer, actions, name} = createSlice({
             state.error = null
         });
         builder.addCase(getAllTrips.rejected,(state,action) => {
+            state.error = action.error
+            state.loading = false
+        })
+        builder.addCase(getTripDetails.pending,(state) => {
+            state.error = null
+            state.loading = true
+        })
+        builder.addCase(getTripDetails.fulfilled,(state, action) => {
+            state.current = action.payload
+            state.error = null
+            state.loading = false
+        })
+        builder.addCase(getTripDetails.rejected, (state, action) => {
             state.error = action.error
             state.loading = false
         })
