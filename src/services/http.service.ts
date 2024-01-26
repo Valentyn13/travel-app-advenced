@@ -1,4 +1,5 @@
 import { OptionsType } from "../types/optionts.types";
+import { HttpError } from "./exception/http-error.exception";
 
 class Http {
   public async load<T>(url: string, options: OptionsType): Promise<T> | never {
@@ -26,9 +27,10 @@ class Http {
         message: response.statusText,
       }))) as Record<"message", string>;
 
-      throw new Error(
-        `Code:${response.status}.Message:${parsedException.message}`
-      );
+      throw new HttpError({
+        status: response.status,
+        message: parsedException.message,
+      });
     }
     return response;
   };
