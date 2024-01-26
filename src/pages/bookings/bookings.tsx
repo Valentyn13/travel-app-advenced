@@ -17,6 +17,7 @@ const BookingsPage: FC = () => {
 
   useEffect(() => {
     dispatch(getUserBookings());
+    
   }, [dispatch]);
 
   useEffect(() => {
@@ -25,6 +26,7 @@ const BookingsPage: FC = () => {
       "Booking was canceled",
       "Error while canceling booking"
     );
+    setIsCancelingSucces('default')
   }, [isCancelingSucces]);
 
   return (

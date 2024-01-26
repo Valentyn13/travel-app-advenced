@@ -18,22 +18,22 @@ import {
 } from "../../helpers/date.helpers";
 import { ITrip } from "../../types/trip.types";
 import TripInfo from "../../components/trip-info/trip-info";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppDispatch } from "../../redux/hooks";
 import { IUser } from "../../types/user.types";
 import { CreateBookingDto } from "../../types/booking.types";
 import { createBooking } from "../../redux/slices/bookings/actions";
 
 type Props = {
   trip: ITrip;
+  user:IUser
   onClose: () => void;
   setIsBookingSucces: Dispatch<SetStateAction<"error" | "succes" | "default">>;
 };
 
-const TripPopup: FC<Props> = ({ trip, onClose, setIsBookingSucces }) => {
+const TripPopup: FC<Props> = ({ trip,user, onClose, setIsBookingSucces }) => {
   const { title, duration, level, id } = trip;
 
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user.user) as IUser;
   const [guests, setGuests] = useState<number>(1);
   const [date, setDate] = useState(formatDate(getTomorrowDate().toISOString()));
   const [isNumberOfGuestsValid, setIsNumberOfGuestsValid] = useState(true);

@@ -12,6 +12,8 @@ import { ToastContainer } from "react-toastify";
 
 import { ROUTES } from "../../types/routes.types";
 import { toastifyEmitter } from "../../helpers/toastify-emmiter.helper";
+import { getAuthenticatedUser } from "../../redux/slices/user/actions";
+import { IUser } from "../../types/user.types";
 
 const TripDeteilsPage: FC = () => {
   const { tripId } = useParams();
@@ -22,6 +24,7 @@ const TripDeteilsPage: FC = () => {
   const [isBookingSucces, setIsBookingSucces] = useState<
     "error" | "succes" | "default"
   >("default");
+  const [user, setUser] = useState<IUser>({} as IUser) 
   const [isBookModalOpen, setIsBookModalOpen] = useState(false);
 
   const handleOpenBookModal = () => setIsBookModalOpen(true);
@@ -31,6 +34,10 @@ const TripDeteilsPage: FC = () => {
     dispatch(getTripDetails(tripId as string))
       .unwrap()
       .catch(() => navigate(ROUTES.SIGN_IN));
+      dispatch(getAuthenticatedUser())
+      .unwrap()
+      .then((user) =>setUser(user))
+      .catch(() => navigate(ROUTES.SIGN_IN))
   }, [dispatch, tripId, navigate]);
 
   useEffect(() => {
@@ -39,6 +46,7 @@ const TripDeteilsPage: FC = () => {
       "New booking was added",
       "Error while adding booking"
     );
+    setIsBookingSucces('default')
   }, [isBookingSucces]);
   return (
     <main className="trip-page">
@@ -85,6 +93,7 @@ const TripDeteilsPage: FC = () => {
           </div>
           {isBookModalOpen && (
             <TripPopup
+            user={user}
               trip={details}
               onClose={handleCloseBookModal}
               setIsBookingSucces={setIsBookingSucces}
