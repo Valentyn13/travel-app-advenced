@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 
-import { ChangeEvent, FC, FormEvent, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 
 import Button from "../../components/common/button/button";
 import Input from "../../components/common/input/input";
@@ -11,17 +11,24 @@ import {
   isPasswordLenghtValid,
 } from "../../helpers/email.helpers";
 import { ROUTES } from "../../types/routes.types";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { signInUser } from "../../redux/slices/user/actions";
+import { toastifyEmitter } from "../../helpers/toastify-emmiter.helper";
+import { ToastContainer } from "react-toastify";
 
 const SignInPage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const error = useAppSelector((state) => state.user.error);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validEmail, setValidEmail] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
+  const [isSignInSucces, setIsSignInSucces] = useState<
+    "succes" | "error" | "default"
+  >("default");
 
   const handleEmailInput = (e: ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
@@ -40,12 +47,22 @@ const SignInPage: FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(signInUser({ email, password }));
+    dispatch(signInUser({ email, password }))
+      .unwrap()
+      .then(() => navigate(ROUTES.MAIN));
     navigate(ROUTES.MAIN);
   };
 
+  useEffect(() => {
+    if (error) {
+      setIsSignInSucces("error");
+    }
+    toastifyEmitter(isSignInSucces, "Succes", "Credentials are incorrect");
+  }, [isSignInSucces, error]);
+
   return (
     <main className="sign-in-page">
+      <ToastContainer />
       <h1 className="visually-hidden">Travel App</h1>
       <form onSubmit={handleSubmit} className="sign-in-form" autoComplete="off">
         <h2 className="sign-in-form__title">Sign In</h2>

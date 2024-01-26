@@ -1,4 +1,11 @@
-import { ChangeEvent, FC, FormEvent, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FC,
+  FormEvent,
+  SetStateAction,
+  useState,
+} from "react";
 
 import Button from "../../components/common/button/button";
 import Input from "../../components/common/input/input";
@@ -19,14 +26,14 @@ import { createBooking } from "../../redux/slices/bookings/actions";
 type Props = {
   trip: ITrip;
   onClose: () => void;
+  setIsBookingSucces: Dispatch<SetStateAction<"error" | "succes" | "default">>;
 };
 
-const TripPopup: FC<Props> = ({ trip, onClose }) => {
+const TripPopup: FC<Props> = ({ trip, onClose, setIsBookingSucces }) => {
   const { title, duration, level, id } = trip;
 
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user) as IUser;
-
   const [guests, setGuests] = useState<number>(1);
   const [date, setDate] = useState(formatDate(getTomorrowDate().toISOString()));
   const [isNumberOfGuestsValid, setIsNumberOfGuestsValid] = useState(true);
@@ -58,7 +65,12 @@ const TripPopup: FC<Props> = ({ trip, onClose }) => {
       guests,
       date,
     };
-    dispatch(createBooking(newBooking));
+    dispatch(createBooking(newBooking))
+      .unwrap()
+      .then(() => {
+        setIsBookingSucces("succes");
+      })
+      .catch(() => setIsBookingSucces("error"));
     onClose();
   };
 

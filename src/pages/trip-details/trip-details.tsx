@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { FC, useEffect, useState } from "react";
 
 import Preloader from "../../components/preloader/preloadert";
@@ -8,25 +8,42 @@ import TripInfo from "../../components/trip-info/trip-info";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getTripDetails } from "../../redux/slices/trips/actions";
+import { ToastContainer } from "react-toastify";
+
+import { ROUTES } from "../../types/routes.types";
+import { toastifyEmitter } from "../../helpers/toastify-emmiter.helper";
 
 const TripDeteilsPage: FC = () => {
   const { tripId } = useParams();
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate();
   const details = useAppSelector((state) => state.trips.current);
   const isLoading = useAppSelector((state) => state.trips.tripsLoading);
+  const [isBookingSucces, setIsBookingSucces] = useState<
+    "error" | "succes" | "default"
+  >("default");
   const [isBookModalOpen, setIsBookModalOpen] = useState(false);
 
   const handleOpenBookModal = () => setIsBookModalOpen(true);
   const handleCloseBookModal = () => setIsBookModalOpen(false);
 
   useEffect(() => {
-    dispatch(getTripDetails(tripId as string));
-  }, [dispatch, tripId]);
+    dispatch(getTripDetails(tripId as string))
+      .unwrap()
+      .catch(() => navigate(ROUTES.SIGN_IN));
+  }, [dispatch, tripId, navigate]);
 
+  useEffect(() => {
+    toastifyEmitter(
+      isBookingSucces,
+      "New booking was added",
+      "Error while adding booking"
+    );
+  }, [isBookingSucces]);
   return (
     <main className="trip-page">
       {isLoading && <Preloader />}
+      <ToastContainer />
       {details && (
         <>
           <h1 className="visually-hidden">Travel App</h1>
@@ -67,7 +84,11 @@ const TripDeteilsPage: FC = () => {
             </div>
           </div>
           {isBookModalOpen && (
-            <TripPopup trip={details} onClose={handleCloseBookModal} />
+            <TripPopup
+              trip={details}
+              onClose={handleCloseBookModal}
+              setIsBookingSucces={setIsBookingSucces}
+            />
           )}
         </>
       )}

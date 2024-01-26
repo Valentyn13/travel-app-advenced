@@ -10,6 +10,8 @@ import BookingsPage from "./pages/bookings/bookings";
 import { ROUTES } from "./types/routes.types";
 import PrivateRoute from "./components/private-route/private-rote";
 
+import "react-toastify/ReactToastify.min.css";
+
 const App = () => {
   return (
     <>
@@ -34,7 +36,14 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          <Route path="*" element={<Navigate to={ROUTES.MAIN} />} />
+          <Route
+            path="*"
+            element={
+              <PrivateRoute redirectPath={ROUTES.SIGN_IN}>
+                <Navigate to={ROUTES.MAIN} />
+              </PrivateRoute>
+            }
+          />
         </Route>
       </Routes>
     </>

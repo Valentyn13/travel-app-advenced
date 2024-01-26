@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { ChangeEvent, FC, FormEvent, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 
 import Button from "../../components/common/button/button";
 import Input from "../../components/common/input/input";
@@ -10,18 +10,26 @@ import {
   isValidEmail,
 } from "../../helpers/email.helpers";
 import { ROUTES } from "../../types/routes.types";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { signUpUser } from "../../redux/slices/user/actions";
+import { toastifyEmitter } from "../../helpers/toastify-emmiter.helper";
+import { ToastContainer } from "react-toastify";
 
 const SignUpPage: FC = () => {
   const navigate = useNavigate();
   const dispath = useAppDispatch();
+
+  const error = useAppSelector((state) => state.user.error);
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validEmail, setValidEmail] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
+
+  const [isSignUpSucces, setIsSignUpSucces] = useState<
+    "succes" | "error" | "default"
+  >("default");
 
   const handleFullNameInput = (e: ChangeEvent<HTMLInputElement>) =>
     setFullName(e.target.value);
@@ -32,8 +40,9 @@ const SignUpPage: FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispath(signUpUser({ fullName, email, password }));
-    navigate(ROUTES.MAIN);
+    dispath(signUpUser({ fullName, email, password }))
+      .unwrap()
+      .then(() => navigate(ROUTES.MAIN));
   };
 
   const handleValidateEmail = () => {
@@ -46,8 +55,20 @@ const SignUpPage: FC = () => {
     setPasswordValid(valid);
   };
 
+  useEffect(() => {
+    if (error) {
+      setIsSignUpSucces("error");
+    }
+    toastifyEmitter(
+      isSignUpSucces,
+      "Authorization successful",
+      "Credentials are incorrect"
+    );
+  }, [isSignUpSucces, error]);
+
   return (
     <main className="sign-up-page">
+      <ToastContainer />
       <h1 className="visually-hidden">Travel App</h1>
       <form onSubmit={handleSubmit} className="sign-up-form" autoComplete="off">
         <h2 className="sign-up-form__title">Sign Up</h2>

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 
 import { IBooking } from "../../types/booking.types";
 import { formatDate } from "../../helpers/date.helpers";
@@ -7,17 +7,22 @@ import { cancelBooking } from "../../redux/slices/bookings/actions";
 
 type Props = {
   booking: IBooking;
+  setIsCancelingSucces: Dispatch<
+    SetStateAction<"error" | "succes" | "default">
+  >;
 };
 
-const BookingCard: FC<Props> = ({ booking }) => {
+const BookingCard: FC<Props> = ({ booking, setIsCancelingSucces }) => {
   const { guests, trip, date, totalPrice, id } = booking;
-
   const dispatch = useAppDispatch();
 
   const handleCancelBooking = () => {
-    dispatch(cancelBooking(id));
+    dispatch(cancelBooking(id))
+      .unwrap()
+      .then(() => setIsCancelingSucces("succes"))
+      .catch(() => setIsCancelingSucces("error"));
   };
-  
+
   return (
     <li data-test-id="booking" className="booking">
       <h3 data-test-id="booking-title" className="booking__title">
