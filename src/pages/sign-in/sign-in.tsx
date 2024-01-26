@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-
+import { ToastContainer } from "react-toastify";
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 
 import Button from "../../components/common/button/button";
@@ -14,7 +14,6 @@ import { ROUTES } from "../../types/routes.types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { signInUser } from "../../redux/slices/user/actions";
 import { toastifyEmitter } from "../../helpers/toastify-emmiter.helper";
-import { ToastContainer } from "react-toastify";
 
 const SignInPage: FC = () => {
   const navigate = useNavigate();

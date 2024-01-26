@@ -25,12 +25,12 @@ import { createBooking } from "../../redux/slices/bookings/actions";
 
 type Props = {
   trip: ITrip;
-  user:IUser
+  user: IUser;
   onClose: () => void;
   setIsBookingSucces: Dispatch<SetStateAction<"error" | "succes" | "default">>;
 };
 
-const TripPopup: FC<Props> = ({ trip,user, onClose, setIsBookingSucces }) => {
+const TripPopup: FC<Props> = ({ trip, user, onClose, setIsBookingSucces }) => {
   const { title, duration, level, id } = trip;
 
   const dispatch = useAppDispatch();

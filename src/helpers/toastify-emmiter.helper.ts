@@ -1,6 +1,10 @@
 import { toast, Bounce } from "react-toastify";
 
-const toastifyEmitter = (action: "error" | "succes" | "default",succesMessage:string, errorMessage:string) => {
+const toastifyEmitter = (
+  action: "error" | "succes" | "default",
+  succesMessage: string,
+  errorMessage: string
+) => {
   if (action === "succes") {
     toast.success(succesMessage, {
       position: "top-right",
